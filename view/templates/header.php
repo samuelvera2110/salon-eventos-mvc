@@ -17,7 +17,7 @@ if (!isset($_SESSION))
         <a href="/index.php">Eventix</a>
         <ul>
             <li><a href="">Clientes</a></li>
-            <li><a href="">Salones</a></li>
+            <li><a href="index.php?c=salones&f=index">Salones</a></li>
             <li><a href="">Servicios</a></li>
             <li><a href="">Reservas</a></li>
             <li><a href="">Eventos</a></li>
