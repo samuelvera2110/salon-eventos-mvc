@@ -32,7 +32,7 @@
         </div>
 
         <label>Cambiar Imagen (Dejar vacío para mantener la actual):</label>
-        <input type="file" name="inputImage" id="inputImagen" accept="image/*" class="form-control">
+        <input type="file" name="imagen" id="inputImagen" accept="image/*" class="form-control">
 
         <br><br>
         <button type="submit" style="background: #007bff; color: white; padding: 10px 20px; border: none;">Actualizar</button>

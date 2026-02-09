@@ -21,7 +21,7 @@
         </form>
     </div>
 
-    <div id="contenedor-salones" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+    <div id="contenedor-salones" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); gap: 20px;">
         <?php if (!empty($resultados)): ?>
             <?php foreach ($resultados as $salon): ?>
                 <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">

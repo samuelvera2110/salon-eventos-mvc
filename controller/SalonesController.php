@@ -35,12 +35,17 @@ class SalonesController {
     }
     // Muestra el formulario para registrar un nuevo salón
     public function view_new() {
+        if (!isset($_SESSION)) session_start();
+        if (!isset($_SESSION['rol_id']) || $_SESSION['rol_id'] != 1) {
+            header("Location: index.php");
+            exit;
+        }
         require_once 'view/salones/salones.new.php';
     }
     
     // Procesa el registro del salón
     public function create() {
-
+        if (!isset($_SESSION)) session_start();
         if (!isset($_SESSION['rol_id']) || $_SESSION['rol_id'] != 1) {
             header("Location: index.php");
             exit;
@@ -54,9 +59,10 @@ class SalonesController {
             $s->precio_hora = floatval($_POST['precio_hora']);
             $s->descripcion = htmlspecialchars($_POST['descripcion']);
             
+            // Validar que el precio o capacidad no sean negativos
             if ($s->precio_hora < 0 || $s->capacidad < 0) {
-                    echo "Error: Los valores numéricos no pueden ser negativos.";
-                    return; 
+                    echo "<script>alert('Error: Precio o capacidad no pueden ser negativos'); window.history.back();</script>";
+                    return;
                 }
 
             $nombreImagen = "salon_default.jpg"; // Nombre por defecto si no se sube imagen
@@ -73,41 +79,38 @@ class SalonesController {
             }
             
             $s->imagen = $nombreImagen;
-
-            // Validar que el precio o capacidad no sean negativos
-            if ($s->precio_hora < 0 || $s->capacidad < 0) {
-                echo "Error: Los valores numéricos no pueden ser negativos.";
-                return; 
-                }
             
-            $exito = $this->model->insertar($s);
-            
-            if ($exito) {
-                header("Location: index.php?c=salones&f=index");
+            if ($this->model->insertar($s)) {
+            header("Location: index.php?c=salones&f=view_admin");
             } else {
-                
-                echo "Error al guardar en la base de datos.";
-                }
+            echo "Error: No se pudo guardar en la BD. Revisa el DAO.";
+            }
             }
     }
     
     // Función para eliminación lógica (cambia estado a 0)
     public function eliminar() {
-                if (!isset($_SESSION['rol_id']) || $_SESSION['rol_id'] != 1) {
-                header("Location: index.php");
-                exit;
-                }
-        if (isset($_REQUEST['id'])) {
-            $id = intval($_REQUEST['id']);
-            $this->model->eliminarLogico($id);
-        }
-        header("Location: index.php?c=salones&f=view_admin");
+    if (!isset($_SESSION)) session_start(); 
+    if (!isset($_SESSION['rol_id']) || $_SESSION['rol_id'] != 1) {
+        header("Location: index.php");
+        exit;
     }
+    
+    if (isset($_REQUEST['id'])) {
+        $id = intval($_REQUEST['id']);
+        $this->model->eliminarLogico($id);
+    }
+    header("Location: index.php?c=salones&f=view_admin");
+}
 
     //Muestra el formulario de edición con los datos actuales del salón
     public function view_edit() {
+        if (!isset($_SESSION)) session_start();
+        if (!isset($_SESSION['rol_id']) || $_SESSION['rol_id'] != 1) {
+            header("Location: index.php");
+            exit;
+        }
         if (isset($_REQUEST['id'])) {
-            $id = intval($_REQUEST['id']);
             $salon = $this->model->buscarPorId($_REQUEST['id']);
             require_once 'view/salones/salones.edit.php';
         }
@@ -115,15 +118,14 @@ class SalonesController {
 
     // Procesa la actualización del salón
     public function update() {
+        if (!isset($_SESSION)) session_start();
         if (!isset($_SESSION['rol_id']) || $_SESSION['rol_id'] != 1) {
-            header("Location: index.php"); 
-            exit;
-            }
+        header("Location: index.php");
+        exit;
+        }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            
             $s = new Salon();
-
             $s->id = intval($_POST['id']); 
             $s->nombre = htmlspecialchars($_POST['nombre']);
             $s->ubicacion = htmlspecialchars($_POST['ubicacion']);
@@ -133,42 +135,35 @@ class SalonesController {
             $s->descripcion = htmlspecialchars($_POST['descripcion']);
             $s->estado = 1;
             
+            // Validación UX: Redireccionar en lugar de morir
             if ($s->precio_hora < 0 || $s->capacidad < 0) {
-                    echo "Error: Los valores numéricos no pueden ser negativos.";
-                    return;
-                }
-            // Verificamos si el usuario subió una imagen válida
+            echo "<script>alert('Error: Valores negativos no permitidos'); window.history.back();</script>";
+            return;
+            }
+
+            //Recuperamos la imagen actual para mantenerla segura en caso de que no se suba una nueva imagen
+            $salonActual = $this->model->buscarPorId($s->id);
+            $s->imagen = ($salonActual) ? $salonActual->getImagen() : "salon_default.jpg";
+
+            // Si se sube una nueva imagen, la procesamos y actualizamos el nombre en el objeto   
             if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
-                //En el DTO se asigna un nombre unico para cada imagen.
-                $archivo = $_FILES['imagen'];
-                $extension = pathinfo($archivo['name'], PATHINFO_EXTENSION);
-                $nuevoNombre = "salon_" . time() . "_" . rand(100, 999) . "." . $extension;
-                $destino = "assets/img/salones/" . $nuevoNombre;
+            $archivo = $_FILES['imagen'];
+            $extension = pathinfo($archivo['name'], PATHINFO_EXTENSION);
+            $nuevoNombre = "salon_" . time() . "_" . rand(100, 999) . "." . $extension;
+            $destino = "assets/img/salones/" . $nuevoNombre;
 
-                if (move_uploaded_file($archivo['tmp_name'], $destino)) {
-                    $s->imagen = $nuevoNombre;
-                } else {
-                    //Si falla la subida mantenemos la imagen actual se asigna la imagen por defecto para evitar errores.
-                    $s->imagen = "salon_default.jpg"; 
-                }
-
-            } else {
-                //Aquí consultamos la BD para rescatar la imagen que ya tenía.
-                $salonActual = $this->model->buscarPorId($s->id);
-                if ($salonActual) {
-                    $s->imagen = $salonActual->getImagen();
+            if (move_uploaded_file($archivo['tmp_name'], $destino)) {
+                $s->imagen = $nuevoNombre;
                 }
             }
-            $exito = $this->model->editar($s); 
 
-            if ($exito) {
-                header("Location: index.php?c=salones&f=view_admin");
-                exit();
-                } else {
-                echo "Error: No se pudo actualizar el registro en la base de datos.";
-                }
-            }
+        if ($this->model->editar($s)) {
+            header("Location: index.php?c=salones&f=view_admin");
+        } else {
+            echo "Error: Falló la actualización en la BD.";
         }
+        }
+    }
 
 
     // Función para búsqueda AJAX
