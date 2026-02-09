@@ -1,3 +1,4 @@
+<!-- autor: Bryan López -->
 <?php require_once HEADER; ?>
 
 <main class="container">
@@ -7,6 +8,7 @@
         <a href="index.php?c=salones&f=index" style="background: #6c757d; color: white; padding: 8px 15px; text-decoration: none; border-radius: 4px; margin-left: 10px;">Volver a Vista Cliente</a>
     </div>
 
+    
     <table border="1" style="width: 100%; border-collapse: collapse;">
         <tr style="background: #eee;">
             <th>ID</th>
@@ -25,7 +27,7 @@
             <td>$<?php echo number_format($s->getPrecioHora(), 2); ?></td>
             <td>
                 <a href="index.php?c=salones&f=view_edit&id=<?php echo $s->getId(); ?>">Editar</a> | 
-                <a href="index.php?c=salones&f=delete&id=<?php echo $s->getId(); ?>" onclick="return confirm('¿Eliminar?')">Eliminar</a>
+                <a href="index.php?c=salones&f=eliminar&id=<?php echo $s->getId(); ?>" onclick="return confirm('¿Eliminar?')">Eliminar</a>
             </td>
         </tr>
         <?php endforeach; ?>
