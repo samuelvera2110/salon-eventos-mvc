@@ -1,0 +1,132 @@
+/* ======= TABLA EVENTOS ======= */
+
+.titulo-modulo {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 28px;
+    color: #3b2c85;
+}
+
+.tabla-eventos {
+    width: 95%;
+    margin: auto;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+}
+
+.tabla-eventos th {
+    background-color: #5b4db7;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.tabla-eventos td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.tabla-eventos tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.tabla-eventos tr:hover {
+    background-color: #e6e4ff;
+}
+
+.acciones a {
+    margin: 0 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.acciones a.editar {
+    color: #1a73e8;
+}
+
+.acciones a.eliminar {
+    color: #d93025;
+}
+
+.btn-nuevo {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 10px 18px;
+    background-color: #3b2c85;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.btn-nuevo:hover {
+    background-color: #2a1f63;
+}
+/* ===== FORMULARIOS EVENTOS ===== */
+
+.form-eventos {
+    width: 60%;
+    margin: 30px auto;
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    font-family: Arial, sans-serif;
+}
+
+.form-eventos h2 {
+    text-align: center;
+    color: #3b2c85;
+    margin-bottom: 20px;
+}
+
+.form-eventos div {
+    margin-bottom: 15px;
+}
+
+.form-eventos label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.form-eventos input,
+.form-eventos select {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.form-eventos input:focus,
+.form-eventos select:focus {
+    outline: none;
+    border-color: #5b4db7;
+    box-shadow: 0 0 4px rgba(91,77,183,0.4);
+}
+
+.form-eventos button {
+    width: 100%;
+    padding: 10px;
+    background-color: #3b2c85;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form-eventos button:hover {
+    background-color: #2a1f63;
+}
+
+.error {
+    font-size: 13px;
+    color: #d93025;
+    margin-left: 5px;
+}

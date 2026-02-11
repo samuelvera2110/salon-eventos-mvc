@@ -1,16 +1,27 @@
 <?php
-
 class Conexion {
-    public static function getConexion(): PDO {
-        $dns = "mysql:host=localhost;port=3306;dbname=" . DBNAME;
-        $conexion = null;
-        try{
-            $conexion = new PDO($dns, DBUSER, DBPASSWORD);
-            $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }catch(Exception $e){
-           echo $e;
-           die("<br><p style='color:red;'>Error: ". $e->getMessage());
+
+    private static $conexion = null;
+
+    public static function getConexion() {
+
+        if (self::$conexion === null) {
+            try {
+                $host = "localhost";
+                $db   = "salon_eventos_db";
+                $user = "root";
+                $pass = "";
+                $charset = "utf8mb4";
+
+                $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+                self::$conexion = new PDO($dsn, $user, $pass);
+                self::$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            } catch (PDOException $e) {
+                die("Error de conexión: " . $e->getMessage());
+            }
         }
-        return $conexion;
+
+        return self::$conexion;
     }
 }
