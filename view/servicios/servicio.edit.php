@@ -1,5 +1,5 @@
 <?php require_once HEADER; ?>
-
+<!-- Autor: Jeremy Guncay-->
 <h2>Editar Servicio</h2>
 
 <form method="POST" action="index.php?c=Servicio&f=actualizar">

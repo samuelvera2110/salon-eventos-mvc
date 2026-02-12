@@ -1,5 +1,5 @@
 <?php
-// Autor: Jeremy
+// Autor: Jeremy Guncay
 
 require_once "config/Conexion.php";
 require_once "model/DTO/ServicioDTO.php";

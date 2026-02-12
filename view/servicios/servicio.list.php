@@ -1,5 +1,5 @@
 <?php require_once HEADER; ?>
-
+<!-- Autor: Jeremy Guncay-->
 <h2>Servicios</h2>
 
 <a href="index.php?c=Servicio&f=crear">Nuevo Servicio</a>
