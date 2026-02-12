@@ -8,9 +8,9 @@ class Conexion {
         if (self::$conexion === null) {
             try {
                 $host = "localhost";
-                $db   = "salon_eventos_db";
-                $user = "root";
-                $pass = "";
+                $db   = DBNAME;  
+                $user = DBUSER;  
+                $pass = DBPASSWORD;  
                 $charset = "utf8mb4";
 
                 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";

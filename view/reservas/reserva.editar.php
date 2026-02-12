@@ -73,6 +73,43 @@
         </div>
 
         <div class="col-12">
+            <h5>Servicios Adicionales</h5>
+            <p>Selecciona los servicios que deseas agregar marcando la casilla y ajustando la cantidad.</p>
+            <?php if (isset($servicios) && is_array($servicios)): ?>
+                <table class="table table-bordered">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Seleccionar</th>
+                            <th>Servicio</th>
+                            <th>Precio Unitario</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($servicios as $servicio): ?>
+                            <?php
+                            $checked = isset($serviciosAsociados[$servicio['id_servicio']]) ? 'checked' : '';
+                            $cantidadValue = isset($serviciosAsociados[$servicio['id_servicio']]) ? $serviciosAsociados[$servicio['id_servicio']] : 1;
+                            ?>
+                            <tr>
+                                <td>
+                                    <input class="form-check-input" type="checkbox" name="servicios[]" value="<?php echo htmlspecialchars($servicio['id_servicio']); ?>" id="servicio_<?php echo $servicio['id_servicio']; ?>" <?php echo $checked; ?>>
+                                </td>
+                                <td><?php echo htmlspecialchars($servicio['nombre_servicio']); ?></td>
+                                <td>$<?php echo htmlspecialchars($servicio['precio']); ?></td>
+                                <td>
+                                    <input type="number" name="cantidad_<?php echo $servicio['id_servicio']; ?>" class="form-control" style="width: 80px;" min="1" value="<?php echo $cantidadValue; ?>">
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <p>No hay servicios disponibles.</p>
+            <?php endif; ?>
+        </div>
+
+        <div class="col-12">
             <button type="submit" class="btn btn-primary">Actualizar Reserva</button>
         </div>
     </form>
