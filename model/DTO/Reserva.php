@@ -10,8 +10,7 @@ class Reserva
     private $precioPact;
     private $estado;
     private $notas;
-
-    public function __construct($idReserva, $fechaInicio, $fechaFin, $idCliente, $idSalon, $precioPact, $estado, $notas)
+     public function __construct($idReserva = null, $fechaInicio = null, $fechaFin = null, $idCliente = null, $idSalon = null, $precioPact = null, $estado = null, $notas = null)
     {
         $this->idReserva = $idReserva;
         $this->fechaInicio = $fechaInicio;
@@ -61,6 +60,41 @@ class Reserva
     public function getNotas()
     {
         return $this->notas;
+    }
+
+    public function setId($idReserva)
+    {
+        $this->idReserva = $idReserva;
+    }
+
+    public function setFechaInicio($fechaInicio)
+    {
+        $this->fechaInicio = $fechaInicio;
+    }
+
+    public function setFechaFin($fechaFin)
+    {
+        $this->fechaFin = $fechaFin;
+    }
+
+    public function setIdCliente($idCliente)
+    {
+        $this->idCliente = $idCliente;
+    }
+
+    public function setIdSalon($idSalon)
+    {
+        $this->idSalon = $idSalon;
+    }
+
+    public function setPrecioPact($precioPact)
+    {
+        $this->precioPact = $precioPact;
+    }
+
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
     }
 
 }
