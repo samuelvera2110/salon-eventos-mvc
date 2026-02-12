@@ -23,29 +23,68 @@ if (!isset($_SESSION))
       <a class="navbar-brand" href="index.php">Eventix</a>
 
       <div>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <?php
+$rol = $_SESSION['rol_id'] ?? 0;
+?>
 
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?c=Cliente&f=index">Clientes</a>
-          </li>
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?c=Salones&f=index">Salones</a>
-          </li>
+  <?php if ($rol == 1): ?> <!-- ADMIN -->
+    
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?c=Cliente&f=index">Clientes</a>
+    </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?c=Servicio&f=index">Servicios</a>
-          </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?c=Salones&f=index">Salones</a>
+    </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?c=Reserva&f=index">Reservas</a>
-          </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?c=Servicio&f=index">Servicios</a>
+    </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="index.php?c=Eventos&f=index">Eventos</a>
-          </li>
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?c=Reserva&f=index">Reservas</a>
+    </li>
 
-        </ul>
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?c=Eventos&f=index">Eventos</a>
+    </li>
+
+  <?php endif; ?>
+
+
+  <?php if ($rol == 3): ?> <!-- CONTADOR -->
+
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?c=Eventos&f=index">Eventos</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?c=Reserva&f=index">Reservas</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?c=Salones&f=index">Salones</a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?c=Servicio&f=index">Servicios</a>
+    </li>
+
+  <?php endif; ?>
+
+
+  <?php if ($rol == 2): ?> <!-- USUARIO -->
+
+    <li class="nav-item">
+      <a class="nav-link" href="index.php?c=Cliente&f=index">Clientes</a>
+    </li>
+
+  <?php endif; ?>
+
+</ul>
+
       </div>
 
       <a class="btn btn-danger" href="index.php?c=login&f=logout">
