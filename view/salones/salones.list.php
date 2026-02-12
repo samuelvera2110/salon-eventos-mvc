@@ -1,65 +1,66 @@
 <!-- autor: Bryan López -->
 <?php require_once HEADER; ?>
 
-<main class="container">
+<main class="container mt-5">
     
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Nuestros Salones</h2>
         
         <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 1): ?>
-            <a href="index.php?c=salones&f=view_admin" style="background: #007bff; color: white; padding: 10px; border-radius: 5px; text-decoration: none; font-weight: bold;">
+            <a href="index.php?c=salones&f=view_admin" class="btn btn-primary fw-bold">
                 Gestionar Salones
             </a>
         <?php endif; ?>
     </div>
 
-    <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #ddd;">
-        <form onsubmit="event.preventDefault()" style="display: flex; gap: 10px;">
-            <input type="text" id="busqueda" name="b" placeholder="🔍 Buscar salón por nombre o ubicación..." 
-                   style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-
+    <!-- Formulario de búsqueda -->
+    <div class="mb-4">
+        <form onsubmit="event.preventDefault()" class="input-group">
+            <input type="text" id="busqueda" name="b" class="form-control" 
+                   placeholder="🔍 Buscar salón por nombre o ubicación...">
         </form>
     </div>
 
-    <div id="contenedor-salones" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); gap: 20px;">
+    <!-- Contenedor de salones -->
+    <div class="row row-cols-1 row-cols-md-2 g-4" id="contenedor-salones">
         <?php if (!empty($resultados)): ?>
             <?php foreach ($resultados as $salon): ?>
-                <div style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                    
-                    <img src="assets/img/salones/<?php echo htmlspecialchars($salon->getImagen()); ?>" 
-                         alt="<?php echo htmlspecialchars($salon->getNombre()); ?>" 
-                         style="width: 100%; height: 200px; object-fit: cover; display: block;">
-                    
-                    <div style="padding: 15px; background: #fff;">
-                        <h3 style="color: #1a3a5a; margin: 0;"><?php echo htmlspecialchars($salon->getNombre()); ?></h3>
-                        <p style="font-weight: bold; color: #d4af37;"><?php echo $salon->getMedidaMetros(); ?> m²</p>
-                        
-                        <ul style="list-style: none; padding: 0; font-size: 0.9em; color: #555;">
-                            <li><strong>Ubicación:</strong> <?php echo htmlspecialchars($salon->getUbicacion()); ?></li>
-                            <li><strong>Capacidad:</strong> <?php echo $salon->getCapacidad(); ?> personas</li>
-                            <li><strong>Precio:</strong> $<?php echo number_format($salon->getPrecioHora(), 2); ?> / hora</li>
-                        </ul>
-                        
-                        <p style="font-style: italic; font-size: 0.85em; color: #777;">
-                            <?php echo htmlspecialchars($salon->getDescripcion()); ?>
-                        </p>
-                        
-                        <button style="width: 100%; padding: 10px; background: #1a3a5a; color: white; border: none; border-radius: 4px; cursor: pointer;">
-                            COTIZAR
-                        </button>
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <img src="assets/img/salones/<?php echo htmlspecialchars($salon->getImagen()); ?>" 
+                             class="card-img-top" 
+                             alt="<?php echo htmlspecialchars($salon->getNombre()); ?>" 
+                             style="height: 200px; object-fit: cover;">
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary"><?php echo htmlspecialchars($salon->getNombre()); ?></h5>
+                            <p class="text-warning fw-bold mb-2"><?php echo $salon->getMedidaMetros(); ?> m²</p>
+
+                            <ul class="list-unstyled text-secondary small mb-3">
+                                <li><strong>Ubicación:</strong> <?php echo htmlspecialchars($salon->getUbicacion()); ?></li>
+                                <li><strong>Capacidad:</strong> <?php echo $salon->getCapacidad(); ?> personas</li>
+                                <li><strong>Precio:</strong> $<?php echo number_format($salon->getPrecioHora(), 2); ?> / hora</li>
+                            </ul>
+
+                            <p class="text-muted fst-italic small mb-3">
+                                <?php echo htmlspecialchars($salon->getDescripcion()); ?>
+                            </p>
+
+                            <button class="btn btn-dark mt-auto w-100">COTIZAR</button>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <p style="grid-column: 1 / -1; text-align: center; color: #777;">No se encontraron salones.</p>
+            <div class="col-12 text-center text-muted">
+                No se encontraron salones.
+            </div>
         <?php endif; ?>
     </div>
 </main>
 
 <script>
-
-    // Funcionalidad de búsqueda en tiempo real
-    // Cuando el usuario escribe, hacer una solicitud AJAX para obtener los resultados filtrados
+    // Búsqueda en tiempo real
     const inputBusqueda = document.getElementById('busqueda');
     const contenedor = document.getElementById('contenedor-salones');
 

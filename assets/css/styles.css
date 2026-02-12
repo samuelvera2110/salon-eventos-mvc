@@ -62,7 +62,7 @@
 }
 
 .btn-nuevo:hover {
-    background-color: #2a1f63;
+    background-color: #181818;
 }
 /* ===== FORMULARIOS EVENTOS ===== */
 
@@ -129,4 +129,38 @@
     font-size: 13px;
     color: #d93025;
     margin-left: 5px;
+}
+
+/* ===== LOGIN STYLES ===== */
+
+body.login-bg {
+    background: linear-gradient(135deg, #181818, #181818);
+    height: 100vh;
+}
+
+.login-card {
+    border: none;
+    border-radius: 15px;
+}
+
+.login-card .card-body {
+    padding: 40px;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+.btn-custom {
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.logo-title {
+    font-weight: bold;
+    color: #2a5298;
+}
+
+.footer-text {
+    color: white;
 }
