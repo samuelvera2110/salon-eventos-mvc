@@ -37,6 +37,10 @@ if (!isset($_SESSION))
           <a class="nav-link" href="index.php?c=Servicio&f=index">Servicios</a>
         </li>
 
+        <li class="nav-item">
+          <a class="nav-link" href="index.php?c=Reserva&f=index">Reservas</a>
+        </li>
+
       </ul>
     </div>
 
