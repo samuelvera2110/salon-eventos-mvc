@@ -41,6 +41,10 @@ if (!isset($_SESSION))
             <a class="nav-link" href="index.php?c=Reserva&f=index">Reservas</a>
           </li>
 
+          <li class="nav-item">
+            <a class="nav-link" href="index.php?c=Eventos&f=index">Eventos</a>
+          </li>
+
         </ul>
       </div>
 

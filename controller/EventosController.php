@@ -2,6 +2,9 @@
 //autor: Joel Gortaire
 require_once "model/DAO/EventoDAO.php";
 require_once "model/DTO/Evento.php";
+require_once "model/DAO/ClienteDAO.php";
+require_once "model/DAO/SalonesDAO.php";
+
 
 class EventosController {
 
@@ -9,6 +12,7 @@ class EventosController {
         $this->listar();
     }
 
+    
     // listado de eventos
     public function listar() {
         $dao = new EventoDAO();
@@ -17,9 +21,17 @@ class EventosController {
     }
 
     // formulario de creación
-    public function crear() {
-        require "view/eventos/crear.php";
-    }
+public function crear() {
+
+    $clienteDAO = new ClienteDAO();
+    $salonesDAO = new SalonesDAO();
+
+    $clientes = $clienteDAO->listar();
+    $salones = $salonesDAO->listar();
+
+    require "view/eventos/crear.php";
+}
+
 
     // Guardar evento (POST)
     public function guardar() {
@@ -29,8 +41,8 @@ class EventosController {
         $e->tipo       = $_POST['tipo_evento'] ?? '';
         $e->fecha      = $_POST['fecha_evento'] ?? '';
         $e->hora       = $_POST['hora_evento'] ?? '';
-        $e->cliente    = $_POST['cliente'] ?? '';
-        $e->salon      = $_POST['salon'] ?? '';
+        $e->cliente = $_POST['id_cliente'];
+        $e->id_salon   = $_POST['id_salon'];
         $e->asistentes = $_POST['asistentes'] ?? 0;
 
         $dao = new EventoDAO();
@@ -42,16 +54,24 @@ class EventosController {
 
     // formulario de edición
     public function editar() {
-        if (!isset($_GET['id'])) {
-            header("Location: index.php?c=Eventos&a=listar");
-            exit;
-        }
 
-        $dao = new EventoDAO();
-        $evento = $dao->obtenerPorId($_GET['id']);
-
-        require "view/eventos/editar.php";
+    if (!isset($_GET['id'])) {
+        header("Location: index.php?c=Eventos&a=listar");
+        exit;
     }
+
+    $dao = new EventoDAO();
+    $evento = $dao->obtenerPorId($_GET['id']);
+
+    $clienteDAO = new ClienteDAO();
+    $salonesDAO = new SalonesDAO();
+
+    $clientes = $clienteDAO->listar();
+    $salones = $salonesDAO->listar();
+
+    require "view/eventos/editar.php";
+}
+
 
     // Actualizar evento (POST)
     public function actualizar() {
@@ -62,8 +82,8 @@ class EventosController {
         $e->tipo       = $_POST['tipo_evento'];
         $e->fecha      = $_POST['fecha_evento'];
         $e->hora       = $_POST['hora_evento'];
-        $e->cliente    = $_POST['cliente'];
-        $e->salon      = $_POST['salon'];
+        $e->cliente = $_POST['cliente'];
+        $e->id_salon   = $_POST['id_salon'];
         $e->asistentes = $_POST['asistentes'];
 
         $dao = new EventoDAO();
@@ -86,4 +106,6 @@ class EventosController {
         header("Location: index.php?c=Eventos&a=listar");
         exit;
     }
+
 }
+
