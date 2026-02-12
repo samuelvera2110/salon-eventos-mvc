@@ -18,7 +18,7 @@ if (!isset($_SESSION))
         <ul>
             <li><a href="index.php?c=Cliente&f=index">Clientes</a></li>
             <li><a href="">Salones</a></li>
-            <li><a href="">Servicios</a></li>
+            <li><a href="index.php?c=Servicio&f=index">Servicios</a></li>
             <li><a href="">Reservas</a></li>
             <li><a href="">Eventos</a></li>
             <?php if (isset($_SESSION['rol_id']) && $_SESSION['rol_id'] == 3): ?>
