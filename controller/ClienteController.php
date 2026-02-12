@@ -14,11 +14,12 @@ class ClienteController {
 
     public function index() {
         $clientes = $this->dao->listar();
-        require_once "view/clientes/index.php";
+        require_once "view/clientes/clientes.index.php";
     }
 
     public function crear() {
-        require_once "view/clientes/crear.php";
+        require_once 'view/clientes/clientes.crear.php';
+
     }
 
     public function guardar() {
