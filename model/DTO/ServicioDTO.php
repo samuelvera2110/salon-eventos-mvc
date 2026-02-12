@@ -1,5 +1,5 @@
 <?php
-// Autor: Jeremy
+// Autor: Jeremy Guncay
 
 class ServicioDTO {
 

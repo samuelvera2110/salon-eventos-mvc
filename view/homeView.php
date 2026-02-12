@@ -1,4 +1,4 @@
-<!-- autor: Samuel Vera -->
+
 
 <?php
 require_once HEADER;
